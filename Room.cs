@@ -10,6 +10,8 @@ namespace MUD
         string description;
         public Dictionary<string, Room> doors;
         ArrayList<Item> items;
+        //ArrayList<Weapon> weapons;
+        //ArrayList<Armor> armor;
         ArrayList<Entity> occupants;
 
 

@@ -1,10 +1,10 @@
 ﻿Outer Battlements:A place once defended by what would seem to be a great many warriors, but now lays desolate and in ruin.
 sword,flag
-indoor:Barracks
+indoor:Barracks,south:
 
-Barracks:The living quarters for a great number of persons, judging by the state they left it they must have been in quite a hurry."
+Barracks:The living quarters for a great number of persons, judging by the state they left it they must have been in quite a hurry.
 greasy key,bedroll
-outdoor:Outer Battlements,north door:Serving Hall,upstairs:Tower
+outdoor:Outer Battlements,west door:Serving Hall,upstairs:Tower
 
 Serving Hall:A large room that once smelled like roasted meat and ale, now only a purtrid lingering oder stains the air.
 ladel,salted pork
@@ -12,4 +12,11 @@ south door:Barracks
 
 Tower:The view from this tall spire gives the occupant vantage for miles and would likely be a great way to spot visitors invited or otherwise.
 looking glass,torch
-downstairs:Barracks
+downstairs:Barracks,laddar:Tower Lookout Post
+
+Tower Lookout Post:This worn structure looks like it took the brunt of whatever seige equipment was used to batter the defenders.
+broken bow, leather vest
+laddar:Tower
+
+Training Yard:You can almost see the visage of past warriors honing skills and sharpening the tool of their trade.
+Wooden Sword
