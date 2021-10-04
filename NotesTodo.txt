@@ -1,0 +1,4 @@
+﻿**CONSIDER**
+	1.Constructing a "file" that the program will "read" when crafting to world
+		**OPTIONS**
+			1.Having a web of nested text files that are read in an acsending order to eventually be read into the program and used to make the world

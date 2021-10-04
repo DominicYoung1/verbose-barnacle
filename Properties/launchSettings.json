@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MUD": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\Cave Johnson\\source\\repos\\MUD"
+    }
+  }
+}

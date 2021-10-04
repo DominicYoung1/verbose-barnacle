@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUD", "MUD.csproj", "{32EB6F90-248D-47FA-9C9B-C68F3B0D1C5E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomLessons", "..\..\..\Desktop\VS#\DomLessons\DomLessons.csproj", "{118A0FF1-88EA-418B-989E-3FCE1AC84E74}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32EB6F90-248D-47FA-9C9B-C68F3B0D1C5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32EB6F90-248D-47FA-9C9B-C68F3B0D1C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32EB6F90-248D-47FA-9C9B-C68F3B0D1C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32EB6F90-248D-47FA-9C9B-C68F3B0D1C5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{118A0FF1-88EA-418B-989E-3FCE1AC84E74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{118A0FF1-88EA-418B-989E-3FCE1AC84E74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{118A0FF1-88EA-418B-989E-3FCE1AC84E74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{118A0FF1-88EA-418B-989E-3FCE1AC84E74}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64B7EFF8-34A7-491F-8E3D-B9AA335A3666}
+	EndGlobalSection
+EndGlobal
