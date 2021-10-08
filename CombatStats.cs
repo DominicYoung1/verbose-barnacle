@@ -24,6 +24,7 @@ namespace MUD
         public double ComputeDamageImparted()
         {
             // TODO ASK FRIEND REFF FOR MECHANIC IMPLIMENTATIONS
+            // In combat, weapons should have a range (3) of damage that is modified by the strength stat on the entity using it.
             Random rng = new Random();
             double weight = rng.NextDouble();
             double rescaledWeight = (weight / 2.0) + 0.5;

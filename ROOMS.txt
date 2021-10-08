@@ -1,22 +1,39 @@
 ﻿Outer Battlements:A place once defended by what would seem to be a great many warriors, but now lays desolate and in ruin.
 sword,flag
-indoor:Barracks,south:
+indoor:Barracks
 
 Barracks:The living quarters for a great number of persons, judging by the state they left it they must have been in quite a hurry.
 greasy key,bedroll
-outdoor:Outer Battlements,west door:Serving Hall,upstairs:Tower
+outdoor:Outer Battlements,west door:Serving Hall,upstairs:Tower,east door:Training Yard,south door:Gardens
 
 Serving Hall:A large room that once smelled like roasted meat and ale, now only a purtrid lingering oder stains the air.
 ladel,salted pork
-south door:Barracks
+south door:Barracks,west door:Infirmary
 
 Tower:The view from this tall spire gives the occupant vantage for miles and would likely be a great way to spot visitors invited or otherwise.
 looking glass,torch
 downstairs:Barracks,laddar:Tower Lookout Post
 
 Tower Lookout Post:This worn structure looks like it took the brunt of whatever seige equipment was used to batter the defenders.
-broken bow, leather vest
+broken bow,leather vest
 laddar:Tower
 
 Training Yard:You can almost see the visage of past warriors honing skills and sharpening the tool of their trade.
-Wooden Sword
+wooden Sword
+west door:Barracks,north door: Armory
+
+Armory:Toppled armor and weapon stands indicate that before this armory was ransacked that it was home to enough weapons to equip what seems like a small army.
+greatsword,steel curiass
+south door:Training Yard
+
+Gardens:Bisecting the castle Brambleburg is a large space that does not smell like death instead replaced with the refreshing smell of sprawling gardens that are starting to look like their overgrown greenery is beginning to creep up on the castle walls itself.
+TODO ITEM BRAINSTORM
+north door:Barracks,east door:Apothecary
+
+Infirmary:Is it irony that the bloodied bedsheet coverd corpses and medical supplies remain unlooted,or is it perhaps just simple human decency at work.
+3x Heath Potions,3x Bandages
+east door:Serving Hall,
+
+Apothecary:You are greeted by large decanters and cauldrons some of which are still filled with strange liquids. Other than the smokey sour odor that fills the air the only other thing of note is the open Eye in a Jar of Liquid...staring right at you.
+TODO ITEM TYPE BRAINSTORM, eye in a jar
+east door:Green House

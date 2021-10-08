@@ -34,6 +34,52 @@ namespace MUD
             items.Push(i);
         }
         // if this function returns null we couldnt find that item.
+
+        // TODO consider a function that combines arraylists into a large readable function/write two more list functions and call them all.
+        //public ArrayList<Weapon> ListWeapons()
+        //{
+          //  return weapons;
+        //}
+
+        //public ArryaList<Armor> ListArmor()
+        //{
+            //return armor;
+        //}
+
+        //public void AddWeapon(Weapon i)
+        //{
+            //weapons.Push(i);
+        //}
+
+        //public Weapon RemoveWeapon(string name)
+        //{
+            //for (int = 0; int < weapons.Length(); i++)
+            //{
+                //if (name = weapons[i].name)
+                //{
+                    //return weapons.Remove(i);
+                //}
+            //}
+            //return null;
+        //}
+
+        //public void AddArmor(Armor i)
+        //{
+            //return Armor;
+        //}
+
+        //public Armor RemoveArmor(string name)
+        //{
+            //for (int i = 0; i < armor.Length(); i++)
+            //{
+                //if (name == armor[i].name)
+                //{
+                   //return armor.Remove(i);
+                //}
+            //}
+            //return null;
+        //}
+        //}
         public Item RemoveItem(string name)
         {
             // For loop through rooms items, find match and write down the index.
@@ -47,7 +93,6 @@ namespace MUD
                    return items.Remove(i);
                 }
             }
-
             return null;
         }
 
