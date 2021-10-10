@@ -6,6 +6,8 @@ namespace MUD
 {
     public class Entity
     {
+        //ArrayList<Armor> armor;
+        //ArrayList<Weapon> weapons;
         ArrayList<Item> inventory;
         public Room currentRoom;
         public string name;
@@ -23,8 +25,20 @@ namespace MUD
             //facingDirection = startingDirection;
         }
 
+        //public ArrayList<Weapon> ListWeapons()
+        //{
+            //return weapons;
+        //}
+
+        //public ArrayList<Armor> ListArmor()
+        //{
+            //return armor;
+        //}
+
         public ArrayList<Item> ListInventory()
         {
+            //ListWeapons();
+            //ListArmor();
             return inventory;
         }
 

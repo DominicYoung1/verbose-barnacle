@@ -11,6 +11,7 @@ namespace MUD
         public Item(string n)
         {
             name = n;
+            //Consider adding description to the parent Item class, will require more writing but may make sub class org easier
         }
     }
     public class Weapon : Item

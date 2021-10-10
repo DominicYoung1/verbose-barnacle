@@ -35,7 +35,7 @@ namespace MUD
         }
         // if this function returns null we couldnt find that item.
 
-        // TODO consider a function that combines arraylists into a large readable function/write two more list functions and call them all.
+        // TODO** consider a function that combines arraylists into a large readable function/write two more list functions and call them all.
         //public ArrayList<Weapon> ListWeapons()
         //{
           //  return weapons;
