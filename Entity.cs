@@ -11,7 +11,7 @@ namespace MUD
         ArrayList<Item> inventory;
         public Room currentRoom;
         public string name;
-        double health;
+        public double health;
         CombatStats combatStats;
         //string kind static/moblie/player ASK JORDAN ABOUT IT LATER
         
@@ -82,6 +82,7 @@ namespace MUD
         public void TakeDamage(double dmg)
         {
             health -= combatStats.ComputeDamageTaken(dmg);
+
         }
 
         public double ImpartDamage()
@@ -93,6 +94,20 @@ namespace MUD
         {
             return health > 0.0;
         }
+
+        // prompt the user for input on what they sould do after each round of combat.
+        public void CombatAction()
+        {
+            
+        }
+
+        //public void Dead()
+        //{
+        //    for (int i = 0; i < inventory.Length(); i++)
+        //    {
+        //        inventory.RemoveItem(i.name);
+        //    }
+        //}
     }
 }
     

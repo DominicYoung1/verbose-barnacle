@@ -1,0 +1,12 @@
+﻿Leather Vest:Lightweight durable and made of leather provides a light amount of protection
+armor:10
+
+Iron Curiass:The standard issue armor piece for most military forces in the area. Solid metal provides moderate protection.
+armor:15
+
+Fancy Robe:Made of probably the finest material this part of the world can source, who ever wears this would probably have been royalty, however it provides quite literally less than zero protection.
+armor:0
+
+Mythril Set:Where could this have come from? The light blue color on this armor astounds the eye.The origin of something like this would likely be unknown to all excpet for the one who made it. Provides an AMAZING amount of protection.
+Armor:50
+

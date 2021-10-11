@@ -23,6 +23,9 @@ namespace MUD
                 defender.TakeDamage(swing);
                 double retaliate = defender.ImpartDamage();
                 initiator.TakeDamage(retaliate);
+                //Console.WriteLine("Attacker Health: {0}", initiator.health);
+                //Console.WriteLine("Defender Health: {0}", defender.health);
+
             }
             if (initiator.Alive())
             {
