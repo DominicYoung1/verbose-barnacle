@@ -25,7 +25,7 @@ namespace MUD
                 initiator.TakeDamage(retaliate);
                 //Console.WriteLine("Attacker Health: {0}", initiator.health);
                 //Console.WriteLine("Defender Health: {0}", defender.health);
-
+                //Need to stop combat and prompt the user to either attack, heal or try and escape.
             }
             if (initiator.Alive())
             {

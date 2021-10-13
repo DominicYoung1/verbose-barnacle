@@ -2,3 +2,5 @@
 	1.Constructing a "file" that the program will "read" when crafting to world
 		**OPTIONS**
 			1.Having a web of nested text files that are read in an acsending order to eventually be read into the program and used to make the world
+	2.As health and healing is introduced as well as more actions for NPC's we need combat to be more turn based, so we need to prompt the user after a round of combat and present them with action options.
+	3.Continue to work on the map/more Rooms.

@@ -14,11 +14,14 @@ namespace MUD
             path = p;
         }
 
+        //create a funtion that reads in all item files and creates one big list of them.
+
         public ArrayList<Room> GetRooms()
         {
             ArrayList<Room> rooms = new ArrayList<Room>(10);
             StreamReader file = File.OpenText(path);
             ArrayList<string> lines = new ArrayList<string>(10);
+            //create a dict of all the items 
             while (!file.EndOfStream)
             {
                 lines.Push(file.ReadLine());

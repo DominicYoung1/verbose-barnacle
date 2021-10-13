@@ -38,4 +38,16 @@ namespace MUD
         }
     }
 
+    public class Aid : Item
+    {
+        public string description;
+        public double healValue;
+
+        public Aid(string n, string f, double d) : base(n)
+        {
+            description = f;
+            healValue = d;
+        }
+    }
+
 }
