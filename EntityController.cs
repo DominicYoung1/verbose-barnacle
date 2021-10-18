@@ -19,11 +19,9 @@ namespace MUD
         {
             npcs = new ArrayList<Entity>(2);
         }
-        public void SpawnEntity(Room startingRoom, string entityName)
+        public void RegisterEntity(Entity entity)
         {
-            // This creates a new entity in "startingRoom"
-            Entity  npc = new Entity(startingRoom, entityName);
-            npcs.Push(npc);
+            npcs.Push(entity);
         }
 
         public void UpdateEntities()

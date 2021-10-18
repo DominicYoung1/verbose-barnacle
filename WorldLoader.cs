@@ -16,6 +16,8 @@ namespace MUD
 
         //create a funtion that reads in all item files and creates one big list of them.
 
+        public ArrayList<Item>
+
         public ArrayList<Room> GetRooms()
         {
             ArrayList<Room> rooms = new ArrayList<Room>(10);

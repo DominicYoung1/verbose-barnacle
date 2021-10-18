@@ -11,7 +11,9 @@ namespace MUD
             ArrayList<Room> rooms = world.GetRooms();
             Entity me = new Entity(rooms[1], "Harold");
             EntityController npcs = new EntityController();
-            npcs.SpawnEntity(rooms[0], "Jim");
+            Entity jim = EntityFactory.CreateEntity(EntityType.Jim, "Jim", rooms[0]);
+            npcs.RegisterEntity(jim);
+            //npcs.SpawnEntity(rooms[0], "Jim");
             PlayerController controller = new PlayerController(me, rooms);
             Console.WriteLine("Everything started!");
             Welcome();

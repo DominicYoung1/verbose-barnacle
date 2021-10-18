@@ -12,7 +12,9 @@ namespace MUD
         public Room currentRoom;
         public string name;
         public double health;
-        CombatStats combatStats;
+        public CombatStats combatStats;
+        public Weapon equipedWeapon;
+        public Armor equipedArmor;
         //string kind static/moblie/player ASK JORDAN ABOUT IT LATER
         
 
@@ -22,6 +24,10 @@ namespace MUD
             currentRoom = startingRoom;
             name = id;
             currentRoom.AddOccupant(this);
+            equipedArmor = null;
+            equipedWeapon = null;
+            health = 15.0;
+            combatStats = new CombatStats();
             //facingDirection = startingDirection;
         }
 

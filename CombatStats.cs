@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MUD
 {
-    class CombatStats
+    public class CombatStats
     {
         double strength;
         double defence;

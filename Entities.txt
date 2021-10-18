@@ -1,0 +1,7 @@
+﻿Spider:Hiss
+Weapon:MeLeggies,Stick Me Leggies Out Really Far,2
+Armor:Chitin,Exo,2
+
+Guard:YOU'RE ME QUEEN
+Weapon:Charisma,yeet,3
+Armor:
