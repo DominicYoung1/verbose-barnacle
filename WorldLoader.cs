@@ -16,9 +16,78 @@ namespace MUD
 
         //create a funtion that reads in all item files and creates one big list of them.
 
-        public ArrayList<Item>
+        public Dictionary<string, Item> GetItems()
+        {
+            Dictionary<string, Item> dic = new Dictionary<string, Item>();
+            StreamReader file = File.OpenText("Weapons.txt");
+            ArrayList<string> lines = new ArrayList<string>(10);
+            while (!file.EndOfStream)
+            {
+                lines.Push(file.ReadLine());
+            }
+            int itemIndex = 0;
+            for (int i = 0; i < lines.Length(); i+= 3)
+            {
+                string nameAndDesc = lines[i];
+                string[] nameDescPair = nameAndDesc.Split(':');
+                string itemName = nameDescPair[0];
+                string itemDesc = nameDescPair[1];
+                string damageAndFiller = lines[i + 1];
+                string[] damageAndFillerPair = damageAndFiller.Split(':');
+                double damage = Convert.ToDouble(damageAndFillerPair[1]);
+                Weapon wep = new Weapon(itemName, itemDesc, damage);
+                dic.Add(wep.name, wep);
+            }
+            StreamReader file2 = File.OpenText("Armor.txt");
+            ArrayList<string> lines2 = new ArrayList<string>(10);
+            while (!file2.EndOfStream)
+            {
+                lines2.Push(file2.ReadLine());
+            }
+            for (int i = 0; i < lines2.Length(); i += 3)
+            {
+                string nameAndDesc = lines2[i];
+                string[] nameDescPair = nameAndDesc.Split(':');
+                string itemName = nameDescPair[0];
+                string itemDesc = nameDescPair[1];
+                string armorAndFiller = lines2[i + 1];
+                string[] armorAndFillerPair = armorAndFiller.Split(':');
+                double armor = Convert.ToDouble(armorAndFillerPair[1]);
+                Armor arm = new Armor(itemName, itemDesc, armor);
+                dic.Add(arm.name, arm);
+            }
+            return dic;
+        }
+        //public Dictionary<string, Armor> GetArmor()
+        //{
+        //    Dictionary<string, Item> dic = new Dictionary<string, Item>();
+        //    StreamReader file = File.OpenText("Armor.txt");
+        //    ArrayList<string> lines = new ArrayList<string>(10);
+        //    while (!file.EndOfStream)
+        //    {
+        //        lines.Push(file.ReadLine());
+        //    }
+        //    int itemIndex = 0;
+        //    for (int i = 0; i < lines.Length(); i += 4)
+        //    {
+        //        string nameAndDesc = lines[i];
+        //        string[] nameDescPair = nameAndDesc.Split(':');
+        //        string itemName = nameDescPair[0];
+        //        string itemDesc = nameDescPair[1];
+        //        for (int j = 1; j < lines.Length(); j += 4)
+        //        {
+        //            string armorAndFiller = lines[j];
+        //            string[] armorAndFillerPair = armorAndFiller.Split(':');
+        //            double armor = Convert.ToDouble(armorAndFillerPair[1]);
+        //            Armor arm = new Armor(itemName, itemDesc, armor);
+        //            dic.Add(arm.name, arm);
+        //        }
+        //    }
+        //    return dic
 
-        public ArrayList<Room> GetRooms()
+        //}
+
+        public ArrayList<Room> GetRooms(Dictionary<string, Item> itemLookup)
         {
             ArrayList<Room> rooms = new ArrayList<Room>(10);
             StreamReader file = File.OpenText(path);
@@ -44,11 +113,14 @@ namespace MUD
             {
                 string items = lines[i];
                 string[] itemStrings = items.Split(',');
-                for (int j = 0; j < itemStrings.Length; j++)
+                if (items != "")
                 {
-                    string itemName = itemStrings[j];
-                    Item item = new Item(itemName);
-                    rooms[counter].AddItem(item);
+                    for (int j = 0; j < itemStrings.Length; j++)
+                    {
+                        string itemName = itemStrings[j];
+                        Item item = itemLookup[itemName];
+                        rooms[counter].AddItem(item);
+                    }
                 }
                 counter++;
             }

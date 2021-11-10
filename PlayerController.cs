@@ -55,6 +55,14 @@ namespace MUD
             {
                 ProcessAttack(s);
             }
+            if (s.StartsWith("inspect"))
+            {
+                ProcessInspect(s);
+            }
+            if (s.StartsWith("equip"))
+            {
+                ProcessEquip(s);
+            }
         }
 
         void ProcessHelp()
@@ -72,10 +80,10 @@ namespace MUD
         void ProcessInv()
         {
             Console.WriteLine("You look in bag and you see:");
-          ArrayList<Item>  inv = player.ListInventory();
+            ArrayList<Item>  inv = player.ListInventory();
             for (int i = 0; i < inv.Length(); i++)
             {
-                Console.WriteLine("{0}", inv[i].name);
+                Console.WriteLine("{0}", inv[i].Name());
             }
         }
 
@@ -97,7 +105,6 @@ namespace MUD
             // needs to look through the list of items in a room for the input string
             // then needs to add the item to the players inventory
            Item queryItem = player.currentRoom.RemoveItem(s.Substring(5));
-            Console.WriteLine("picking up {0}", queryItem);
             if (queryItem != null)
             {
                 player.PickupItem(queryItem);
@@ -123,6 +130,38 @@ namespace MUD
             string dName = s.Substring(7);
            Entity defender = player.currentRoom.GetEntity(dName);
             player.InitiateCombat(defender);
+        }
+        void ProcessInspect(string s)
+        {
+            string inspectName = s.Substring(8);
+            for (int i = 0; i < player.currentRoom.ListItems().Length(); i++)
+            {
+                if (inspectName == player.currentRoom.ListItems()[i].Name())
+                {
+                    player.currentRoom.ListItems()[i].Inspect();
+                }
+            }
+        }
+
+        void ProcessEquip(string s)
+        {
+            string equipName = s.Substring(6);
+            for (int i = 0; i < player.ListInventory().Length(); i++)
+            {
+                if (equipName == player.ListInventory()[i].Name())
+                {
+                    if (player.ListInventory()[i] is Weapon w) // and example of PATTERN MATCHING (see notes)
+                    {
+                        player.EquipWeapon(w);
+                        Console.WriteLine("Equipped {0}", w.Name());
+                    }
+                    if (player.ListInventory()[i] is Armor a)
+                    {
+                        player.EquipArmor(a);
+                        Console.WriteLine("Equipped {0}", a.Name());
+                    }
+                }
+            }
         }
     }
 }

@@ -88,7 +88,7 @@ namespace MUD
             for (int i = 0; i < items.Length(); i++)
             {
                 Console.WriteLine("looking for {0}", name);
-                if (name == items[i].name)
+                if (name == items[i].Name())
                 {
                    return items.Remove(i);
                 }
@@ -107,7 +107,7 @@ namespace MUD
             Console.WriteLine("Items in the room:");
             for (int i = 0; i < items.Length(); i++)
             {
-                Console.WriteLine(items[i].name);
+                Console.WriteLine(items[i].Name());
             }
             Console.WriteLine("The occupants in the room are:");
             for (int i = 0; i < occupants.Length(); i++)

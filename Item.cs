@@ -20,13 +20,12 @@ namespace MUD
         public void Inspect();
         public string Name();
         //public string Describe(); (probably redundant with Insepct())
-        
+
     }
 
     public interface IEquipable
     {
-        public void Equip();
-        public void UnEquip();
+      
     }
     public class Weapon : Item, IEquipable
     {
@@ -53,17 +52,14 @@ namespace MUD
 
         public void Inspect()
         {
-            Console.WriteLine("{0}",name);
-            Console.WriteLine("{0}",description);
-            Console.WriteLine("Does {0}",damageValue);
+            Console.WriteLine("{0}", name);
+            Console.WriteLine("{0}", description);
+            Console.WriteLine("Does {0} damage", damageValue);
         }
 
-        public void Equip()
-        {
+       
 
-        }
-
-            }
+    }
 
     public class Armor : Item, IEquipable
     {
@@ -92,20 +88,21 @@ namespace MUD
         {
             Console.WriteLine("{0}", name);
             Console.WriteLine("{0}", description);
-            Console.WriteLine("Has {0}", armorValue);
-        } 
-    }
-
-    public class Aid : Item
-    {
-        public string description;
-        public double healValue;
-
-        public Aid(string n, string f, double d)
-        {
-            description = f;
-            healValue = d;
+            Console.WriteLine("Has {0} armor", armorValue);
         }
     }
-
 }
+
+//    public class Aid : Item
+//    {
+//        public string description;
+//        public double healValue;
+
+//        public Aid(string n, string f, double d)
+//        {
+//            description = f;
+//            healValue = d;
+//        }
+//    }
+
+//}

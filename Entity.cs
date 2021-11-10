@@ -65,7 +65,7 @@ namespace MUD
         {
             for (int i = 0; i < inventory.Length(); i++)
             {
-                if (name == inventory[i].name)
+                if (name == inventory[i].Name())
                 {
                     return inventory.Remove(i);
                 }
@@ -99,6 +99,18 @@ namespace MUD
         public bool Alive()
         {
             return health > 0.0;
+        }
+
+        public bool EquipWeapon(Weapon w)
+        {
+            equipedWeapon = w;
+            return true;
+        }
+
+        public bool EquipArmor(Armor a)
+        {
+            equipedArmor = a;
+            return true;
         }
 
         // prompt the user for input on what they sould do after each round of combat.

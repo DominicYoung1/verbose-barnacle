@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace MUD
@@ -8,7 +9,9 @@ namespace MUD
         static void Main(string[] args)
         {
             WorldLoader world = new WorldLoader("ROOMS.txt");
-            ArrayList<Room> rooms = world.GetRooms();
+            Dictionary<string, Item> dic = new Dictionary<string, Item>();
+            dic = world.GetItems();
+            ArrayList<Room> rooms = world.GetRooms(dic);
             Entity me = new Entity(rooms[1], "Harold");
             EntityController npcs = new EntityController();
             Entity jim = EntityFactory.CreateEntity(EntityType.Jim, "Jim", rooms[0]);

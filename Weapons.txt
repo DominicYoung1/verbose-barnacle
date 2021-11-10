@@ -1,24 +1,23 @@
 ﻿Longsword:This weapon probably belonged to one of the defenders of the hamlet you are now in.Double edged with a worn but study blade it'll get the job done.
-damage:10-15
+damage:15
 
 Shortsword:A small blade best used for thrusting attacks should be used at close range
-damage:6-10
+damage:10
 
 Laddle:A wooden kitchen tool.Not really sure why anyone would use this as an actual weapon, but to each their own.
-damage:50-55
+damage:55
 
 Unarmed/Fists:A lot of damage could be done by someones bare fists...however that damage is usually done to the fist itself.
-0-2
+damage:2
 
 Dagger:Easily concealable and perfect for a stealthy slit throat. In a pitched battle however...not the best option.
-damage:2-5
+damage:5
 
 Greatsword:A beast of a weapon that is has the power to cleave through most people and pieces of armor.
-damage:25-30
+damage:30
 
 Hand Ax:A tool used by carpenters, butchers, and the common man it is also a very hand tool of war used by many.
-damage:6-13
+damage:13
 
 Great Ax:The list of people who could comfortably use this weapon has to be short. A massive cleaving weapon that would sunder even the strongest piece of armor.
-damage:15-35
-
+damage:35
