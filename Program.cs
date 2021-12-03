@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace MUD
 {
@@ -8,6 +9,7 @@ namespace MUD
     {
         static void Main(string[] args)
         {
+
             WorldLoader world = new WorldLoader("ROOMS.txt");
             Dictionary<string, Item> dic = new Dictionary<string, Item>();
             dic = world.GetItems();
@@ -19,20 +21,23 @@ namespace MUD
             //npcs.SpawnEntity(rooms[0], "Jim");
             PlayerController controller = new PlayerController(me, rooms);
             Console.WriteLine("Everything started!");
-            Welcome();
-            bool running = true;
-            while (running)
-            {
-                string input = PromptUser();
-                npcs.UpdateEntities();
-                controller.processCommand(input);
+            GameLoop loop = InitializeActors(controller);
+            loop.SendMessage("Player", new PrintEvent(Welcome()));
+            loop.Start();
+            //Welcome();
+            //bool running = true;
+            //while (running)
+            //{
+            //    string input = PromptUser();
+            //    npcs.UpdateEntities();
+            //    controller.processCommand(input);
 
-                if (input == "quit")
-                {
-                    running = false;
-                }
-            }
-            Console.WriteLine("Bye!");
+            //    if (input == "quit")
+            //    {
+            //        running = false;
+            //    }
+            //}
+            //Console.WriteLine("Bye!");
         }
 
         public static string PromptUser()
@@ -42,12 +47,30 @@ namespace MUD
             return userInput;
         }
 
-        public static void  Welcome()
+        public static string  Welcome()
         {
-            Console.WriteLine("Welcome to Bambleburg.");
-            Console.WriteLine("This place was once a thriving estate that used to be the seat of power for the local governing body.");
-            Console.WriteLine("But that was a long time ago....for now just expolore!");
+            return @"
+Welcome to Bambleburg.
+This place was once a thriving estate that used to be the seat of power for the local governing body.
+But that was a long time ago....for now just expolore!";
+        }
 
+        public static GameLoop InitializeActors(PlayerController c)
+        {
+            // 1. We need to make our GameLoop instance
+            // 2. We need to make our UserInteractionThread instance
+            // 3. We need to connect our two actors together in an actor system.
+
+            GameLoop gameLoop = new GameLoop(c);
+            UserInteractionThread userInterationThread = new UserInteractionThread();
+            gameLoop.RegisterListener("Player",userInterationThread);
+            gameLoop.RegisterListener("Self", gameLoop);
+            userInterationThread.RegisterListener("Self", userInterationThread);
+            userInterationThread.RegisterListener("GameLoop",gameLoop);
+
+            Thread uiThread = new Thread(new ThreadStart(userInterationThread.Start));
+            uiThread.Start();
+            return gameLoop;
         }
     }
 }

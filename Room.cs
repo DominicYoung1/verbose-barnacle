@@ -96,24 +96,26 @@ namespace MUD
             return null;
         }
 
-        public void Describe()
+        public string Describe()
         {
-            Console.WriteLine(name);
-            Console.WriteLine(description);
+            string s = String.Format("{0} \n {1}", name, description);
+            //Console.WriteLine(name);
+            //Console.WriteLine(description);
             foreach(string direction in doors.Keys)
             {
-                Console.WriteLine("{0} -> {1}", direction, doors[direction].name);
+                s = s + String.Format("\n{0} -> {1}", direction, doors[direction].name);
             }
-            Console.WriteLine("Items in the room:");
+            s = s + String.Format("\nItems in the room:");
             for (int i = 0; i < items.Length(); i++)
             {
-                Console.WriteLine(items[i].Name());
+                s = s + String.Format("\n{0}", items[i].Name());
             }
-            Console.WriteLine("The occupants in the room are:");
+            s = s + String.Format("\nThe occupants in the room are:");
             for (int i = 0; i < occupants.Length(); i++)
             {
-                Console.WriteLine(occupants[i].name);
+                s = s + String.Format("\n{0}", occupants[i].name);
             }
+            return s;
         }
         public void AddOccupant(Entity e)
         {

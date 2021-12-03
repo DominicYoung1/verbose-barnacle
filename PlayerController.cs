@@ -16,91 +16,108 @@ namespace MUD
             rooms = r;
         }
 
-        public void processCommand(string s)
+        public string processCommand(string s)
         {
             // some sort of parser to take input strings and match them to the commands accepted trigger words/phrases
             // this needs to be able to do ALOT of shit.
 
+            
+
             if (s == "help")
             {
-                ProcessHelp();
+                return ProcessHelp();
+               
             }
 
             if (s == "inv")
             {
-                ProcessInv();
+                return ProcessInv();
+               
             }
 
             if (s == "look")
             {
-                ProcessLook();
+                return ProcessLook();
+                
             }
 
             if (s.StartsWith("move"))
             {
-                ProcessMove(s);
+                return ProcessMove(s);
+                
             }
 
             if (s.StartsWith("take"))
             {
-                ProcessTake(s);
+                return ProcessTake(s);
+                
             }
 
             if (s.StartsWith("drop"))
             {
-                ProcessDrop(s);
+                return ProcessDrop(s);
+                
             }
 
             if (s.StartsWith("attack"))
             {
-                ProcessAttack(s);
+                return ProcessAttack(s);
+                
             }
             if (s.StartsWith("inspect"))
             {
-                ProcessInspect(s);
+                return ProcessInspect(s);
+              
             }
             if (s.StartsWith("equip"))
             {
-                ProcessEquip(s);
-            }
+                return ProcessEquip(s);
+                
+            } 
+                return String.Format("Error! Please enter a valid command.");
         }
 
-        void ProcessHelp()
+        string ProcessHelp()
         {
-            Console.WriteLine("Commands:");
-            Console.WriteLine("help: Shows a list of all commands");
-            Console.WriteLine("inv: Shows the current contents of the players inventory");
-            Console.WriteLine("look: Shows the information of the room the player is in");
-            Console.WriteLine("quit: Exits the game");
-            Console.WriteLine("move <direction>: Moves the player in the desired direction");
-            Console.WriteLine("take <item>: Takes an item in the room and puts in the player inventory");
-            Console.WriteLine("drop <item>: Removes an item from the player inventory and places it in the room");
+            return @"
+Commands:
+help: Shows a list of all commands
+inv: Shows the current contents of the players inventory
+look: Shows the information of the room the player is in
+quit: Exits the game
+move <direction>: Moves the player in the desired direction
+take <item>: Takes an item in the room and puts in the player inventory
+drop <item>: Removes an item from the player inventory and places it in the room
+";    
         }
 
-        void ProcessInv()
+        string ProcessInv()
         {
-            Console.WriteLine("You look in bag and you see:");
+            string s = "You look in bag and you see:";
             ArrayList<Item>  inv = player.ListInventory();
             for (int i = 0; i < inv.Length(); i++)
             {
-                Console.WriteLine("{0}", inv[i].Name());
+                //Console.WriteLine("{0}", inv[i].Name());
+                s = s + "\n" + inv[i].Name();
             }
+            return s;
         }
 
-        void ProcessLook()
+        string ProcessLook()
         {
             Console.WriteLine("You take a look around.");
-            player.currentRoom.Describe();
+            string s =player.currentRoom.Describe();
+            return s;
         }
         
-        void ProcessMove(string s)
+        string ProcessMove(string s)
         {
             string s2 = s.Substring(5);
             player.Move(s2);
-            ProcessLook();
+            return ProcessLook();
         }
 
-        void ProcessTake(string s)
+        string ProcessTake(string s)
         {
             // needs to look through the list of items in a room for the input string
             // then needs to add the item to the players inventory
@@ -109,20 +126,20 @@ namespace MUD
             {
                 player.PickupItem(queryItem);
             }
-            Console.WriteLine("You picked up {0}.", s);
+            return String.Format("You picked up {0}.", s);
         }
 
-        void ProcessDrop(string s)
+        string ProcessDrop(string s)
         {
             Item queryItem = player.RemoveItem(s.Substring(5));
             if (queryItem != null)
             {
                 player.currentRoom.AddItem(queryItem);
             }
-            Console.WriteLine("You dropped {0}.", s);
+            return String.Format("You dropped {0}.", s);
         }
 
-        void ProcessAttack(string s)
+        string ProcessAttack(string s)
         {
             // grab the name of the entity being attacked
             // 
@@ -130,8 +147,9 @@ namespace MUD
             string dName = s.Substring(7);
            Entity defender = player.currentRoom.GetEntity(dName);
             player.InitiateCombat(defender);
+            return "boi";
         }
-        void ProcessInspect(string s)
+        string ProcessInspect(string s)
         {
             string inspectName = s.Substring(8);
             for (int i = 0; i < player.currentRoom.ListItems().Length(); i++)
@@ -141,9 +159,10 @@ namespace MUD
                     player.currentRoom.ListItems()[i].Inspect();
                 }
             }
+            return "boi";
         }
 
-        void ProcessEquip(string s)
+        string ProcessEquip(string s)
         {
             string equipName = s.Substring(6);
             for (int i = 0; i < player.ListInventory().Length(); i++)
@@ -162,6 +181,7 @@ namespace MUD
                     }
                 }
             }
+            return "boi";
         }
     }
 }
