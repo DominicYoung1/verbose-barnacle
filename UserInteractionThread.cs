@@ -31,12 +31,13 @@ namespace MUD
 
        override protected void ProcessEvent(IEvent evt)
         {
+            // Currently Console.Readline is blocking, we need the ability to print to the screen "Process" even without user interation.
+
             if (evt is PrintEvent pEvt)
             {
                 Console.WriteLine(pEvt.GetString());
                 //Console.WriteLine("Hello from our UserInterationThread!");
                 SendMessage("GameLoop", new CommandEvent(Console.ReadLine()));
-                SendMessage("Self", new PrintEvent("UI Thread"));
             }
         }
     }

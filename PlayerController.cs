@@ -88,6 +88,7 @@ quit: Exits the game
 move <direction>: Moves the player in the desired direction
 take <item>: Takes an item in the room and puts in the player inventory
 drop <item>: Removes an item from the player inventory and places it in the room
+inspect <item>: Takes a closer look at an item
 ";    
         }
 
@@ -106,7 +107,7 @@ drop <item>: Removes an item from the player inventory and places it in the room
         string ProcessLook()
         {
             Console.WriteLine("You take a look around.");
-            string s =player.currentRoom.Describe();
+            string s = player.currentRoom.Describe();
             return s;
         }
         
@@ -152,14 +153,15 @@ drop <item>: Removes an item from the player inventory and places it in the room
         string ProcessInspect(string s)
         {
             string inspectName = s.Substring(8);
+            string ret = "";
             for (int i = 0; i < player.currentRoom.ListItems().Length(); i++)
             {
                 if (inspectName == player.currentRoom.ListItems()[i].Name())
                 {
-                    player.currentRoom.ListItems()[i].Inspect();
+                    ret = player.currentRoom.ListItems()[i].Inspect();
                 }
             }
-            return "boi";
+            return ret;
         }
 
         string ProcessEquip(string s)

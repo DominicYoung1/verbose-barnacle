@@ -17,7 +17,7 @@ namespace MUD
 
     public interface Item
     {
-        public void Inspect();
+        public string Inspect();
         public string Name();
         //public string Describe(); (probably redundant with Insepct())
 
@@ -50,15 +50,13 @@ namespace MUD
         //    return description;
         //}
 
-        public void Inspect()
+        public string Inspect()
         {
-            Console.WriteLine("{0}", name);
-            Console.WriteLine("{0}", description);
-            Console.WriteLine("Does {0} damage", damageValue);
+            return String.Format("{0}\n{1}\nDoes {2} damage",name, description, damageValue.ToString());
+            //Console.WriteLine("{0}", name);
+            //Console.WriteLine("{0}", description);
+            //Console.WriteLine("Does {0} damage", damageValue);
         }
-
-       
-
     }
 
     public class Armor : Item, IEquipable
@@ -84,11 +82,12 @@ namespace MUD
         //    return description;
         //}
 
-        public void Inspect()
+        public string  Inspect()
         {
-            Console.WriteLine("{0}", name);
-            Console.WriteLine("{0}", description);
-            Console.WriteLine("Has {0} armor", armorValue);
+            return String.Format("{0}\n{1}\nProvides {2} armor", name, description, armorValue.ToString());
+            //Console.WriteLine("{0}", name);
+            //Console.WriteLine("{0}", description);
+            //Console.WriteLine("Has {0} armor", armorValue);
         }
     }
 }

@@ -23,6 +23,8 @@ namespace MUD.Multithreading
 
         abstract protected void ProcessEvent(IEvent evt);
 
+        abstract protected void Update();
+
         public void SendMessage(String listenerName, IEvent message)
         {
             // Find the listener in the Dic 
@@ -53,6 +55,7 @@ namespace MUD.Multithreading
                 }
                     //There was nothing on the queue. Wait a bit and try again.
                    Thread.Sleep(1000);
+                Update();
             }
         }
 

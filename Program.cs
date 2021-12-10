@@ -21,7 +21,7 @@ namespace MUD
             //npcs.SpawnEntity(rooms[0], "Jim");
             PlayerController controller = new PlayerController(me, rooms);
             Console.WriteLine("Everything started!");
-            GameLoop loop = InitializeActors(controller);
+            GameLoop loop = InitializeActors(controller, npcs);
             loop.SendMessage("Player", new PrintEvent(Welcome()));
             loop.Start();
             //Welcome();
@@ -55,13 +55,13 @@ This place was once a thriving estate that used to be the seat of power for the 
 But that was a long time ago....for now just expolore!";
         }
 
-        public static GameLoop InitializeActors(PlayerController c)
+        public static GameLoop InitializeActors(PlayerController c, EntityController n)
         {
             // 1. We need to make our GameLoop instance
             // 2. We need to make our UserInteractionThread instance
             // 3. We need to connect our two actors together in an actor system.
 
-            GameLoop gameLoop = new GameLoop(c);
+            GameLoop gameLoop = new GameLoop(c, n);
             UserInteractionThread userInterationThread = new UserInteractionThread();
             gameLoop.RegisterListener("Player",userInterationThread);
             gameLoop.RegisterListener("Self", gameLoop);
