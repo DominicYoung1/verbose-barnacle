@@ -24,7 +24,7 @@ namespace MUD
             npcs.Push(entity);
         }
 
-        public void UpdateEntities()
+        void NpcMove()
         {
             //This moves entities between rooms.
             for (int i = 0; i < npcs.Length(); i++)
@@ -33,20 +33,24 @@ namespace MUD
                 int randInt = rng.Next(npcs[i].currentRoom.doors.Count);
                 //take doors on the current room, make an array out of it, random number is the index choosen
                 ArrayList<string> doors = new ArrayList<string>(10);
-                foreach(string key in npcs[i].currentRoom.doors.Keys)
+                foreach (string key in npcs[i].currentRoom.doors.Keys)
                 {
                     doors.Push(key);
                 }
                 // take randInt -> doors -> entity.Move(of all of that)
                 npcs[i].Move(doors[randInt]);
             }
-            // RE-EXAMINE THIS MECHANIC/PROCESS WITH FRIENDS
-            // combat can be started with an attack
-            // the function that runs to combat instance can take in two inputs (combatants)
-            // these can be determined by who makes the first initiating attack and the target
-            // the combat instance would take priority over the UpdateEntities job (shit doesnt move while you are in combat)
-            // the ending of the combat instance counts as a passing of time (UpdateEntities then fires after so shit can move)
-            // combat ends when one of the entities health drops to below 0
+        }
+        void NpcPickup()
+        {
+
+        }
+
+        public void UpdateEntities()
+        {
+            // EVENTUALLY logic will need to be applied to actions, for now focus on it working.
+            NpcMove();
+            
         }
     }
 }

@@ -17,7 +17,9 @@ namespace MUD
             Entity me = new Entity(rooms[1], "Harold");
             EntityController npcs = new EntityController();
             Entity jim = EntityFactory.CreateEntity(EntityType.Jim, "Jim", rooms[0]);
+            Entity frnak = EntityFactory.CreateEntity(EntityType.Frank, "Frank", rooms[2]);
             npcs.RegisterEntity(jim);
+            npcs.RegisterEntity(frnak);
             //npcs.SpawnEntity(rooms[0], "Jim");
             PlayerController controller = new PlayerController(me, rooms);
             Console.WriteLine("Everything started!");

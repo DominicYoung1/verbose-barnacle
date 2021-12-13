@@ -117,6 +117,11 @@ namespace MUD
             }
             return s;
         }
+
+        public ArrayList<Entity> GetOccupants()
+        {
+            return occupants;
+        }
         public void AddOccupant(Entity e)
         {
             //take in a entity 

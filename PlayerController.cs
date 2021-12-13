@@ -16,6 +16,11 @@ namespace MUD
             rooms = r;
         }
 
+        public Entity PlayerInfo()
+        {
+            return player;
+        }
+
         public string processCommand(string s)
         {
             // some sort of parser to take input strings and match them to the commands accepted trigger words/phrases

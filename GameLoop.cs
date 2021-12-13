@@ -42,7 +42,50 @@ namespace MUD
         protected override void Update()
         {
             //This function will be responsible for "anything that does not depend on the user"'s actions in time.
-            string message = npcs.UpdateEntities(); // can be used to make a string that can be shown to the player if something moves in their view.
+            ArrayList<string> occupants = new ArrayList<string>(10);
+            ArrayList<Entity> entities = controller.PlayerInfo().currentRoom.GetOccupants();
+            for (int i = 0; i < entities.Length(); i++)
+            {
+                occupants.Push(entities[i].name);
+            }
+            npcs.UpdateEntities(); // can be used to make a string that can be shown to the player if something moves in their view.
+            ArrayList<string> occupants2 = new ArrayList<string>(10);
+            for (int i = 0; i < entities.Length(); i++)
+            {
+                occupants2.Push(entities[i].name);
+            }
+            for (int i = 0; i < occupants.Length(); i++)
+            {
+                bool isIn = false; 
+                for (int j = 0; j < occupants2.Length(); j++)
+                {
+                    if (occupants[i] == occupants2[j])
+                    {
+                        isIn = true;
+                    }
+                }
+                if (isIn == false)
+                {
+                    string message = String.Format("{0} left the room!", occupants[i]);
+                    SendMessage("Player", new PrintEvent(message));
+                }
+            }
+            for (int i = 0; i < occupants2.Length(); i++)
+            {
+                bool isIn = false;
+                for (int j = 0; j < occupants.Length(); j++)
+                {
+                    if (occupants2[i] == occupants[j])
+                    {
+                        isIn = true;
+                    }
+                }
+                if (isIn == false)
+                {
+                    string message = String.Format("{0} entered the room!", occupants2[i]);
+                    SendMessage("Player", new PrintEvent(message));
+                }
+            }
         }
     }
 }

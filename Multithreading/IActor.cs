@@ -9,8 +9,9 @@ namespace MUD.Multithreading
     {
 
         Dictionary<String, IActor> listeners;
+        int waitTime;
         /**
-         * Our actor represents a thread/other unit of computation running somewherer.
+         * Our Actors are units of computation that are typically built on top of threads.
          * 
          * Going to our analogy, an actor would be a person who checks their inbox, processes events, and sends messages back out.
          * 
@@ -42,6 +43,7 @@ namespace MUD.Multithreading
         protected void Initialize()
         {
             listeners = new Dictionary<string, IActor>();
+            waitTime = (1000);
         }
 
         private void CheckAndProcessQueue()
@@ -50,11 +52,19 @@ namespace MUD.Multithreading
             {
                 if (!Inbox().IsEmpty())
                 {
-                    IEvent eventToProcess = Inbox().Dequeue();
-                    ProcessEvent(eventToProcess);
+                    bool IsEmpty = false;
+                    while (IsEmpty == false)
+                    {
+                        IEvent eventToProcess = Inbox().Dequeue();
+                        ProcessEvent(eventToProcess);
+                        if (Inbox().IsEmpty())
+                        {
+                            IsEmpty = true;
+                        }
+                    }
                 }
                     //There was nothing on the queue. Wait a bit and try again.
-                   Thread.Sleep(1000);
+                   Thread.Sleep(waitTime);
                 Update();
             }
         }
@@ -72,6 +82,11 @@ namespace MUD.Multithreading
         public void RegisterListener(String name, IActor listener)
         {
             listeners.Add(name, listener);
+        }
+
+        protected void SetWaitTime(int newTime)
+        {
+            waitTime = newTime;
         }
     }
 }

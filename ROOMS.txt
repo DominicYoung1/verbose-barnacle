@@ -20,7 +20,7 @@ laddar:Tower
 
 Training Yard:You can almost see the visage of past warriors honing skills and sharpening the tool of their trade.
 Hand Ax
-west door:Barracks,north door: Armory
+west door:Barracks,north door:Armory
 
 Armory:Toppled armor and weapon stands indicate that before this armory was ransacked that it was home to enough weapons to equip what seems like a small army.
 Greatsword
@@ -36,4 +36,8 @@ east door:Serving Hall
 
 Apothecary:You are greeted by large decanters and cauldrons some of which are still filled with strange liquids. Other than the smokey sour odor that fills the air the only other thing of note is the open Eye in a Jar of Liquid...staring right at you.
 
-east door:Green House
+east door:Green House,west door:Gardens
+
+Green House:Believe it or not this house is indeed green!
+
+west door:Apothecary
