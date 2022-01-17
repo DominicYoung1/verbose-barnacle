@@ -8,12 +8,12 @@ namespace MUD
 {
     public class UserInteractionThread : IActor
     {
-        ArrayQueue inbox;
+        ListPriorityQueue inbox;
         Thread readLineThread;
 
         public UserInteractionThread()
         {
-            inbox = new ArrayQueue();
+            inbox = new ListPriorityQueue();
             readLineThread = new Thread(new ThreadStart(ReadLineHelper));
             Initialize();
             readLineThread.Start();
@@ -29,7 +29,7 @@ namespace MUD
          * All the imlementor has to do is write code that processes events.
          */
 
-       override protected IThreadedQueue Inbox()
+       override protected IThreadedPrioQueue Inbox()
         {
             return inbox;
         }
@@ -57,7 +57,7 @@ namespace MUD
             bool isLooking = false;
             while (isLooking == false)
             {
-                SendMessage("GameLoop", new CommandEvent(Console.ReadLine()));
+                SendMessage("GameLoop", new CommandEvent(Console.ReadLine()),0);
             }
         }
     }

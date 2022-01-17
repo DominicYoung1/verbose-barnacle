@@ -20,19 +20,19 @@ namespace MUD.Multithreading
          * All the imlementor has to do is write code that processes events.
          */
 
-        abstract protected IThreadedQueue Inbox();
+        abstract protected IThreadedPrioQueue Inbox();
 
         abstract protected void ProcessEvent(IEvent evt);
 
         abstract protected void Update();
 
-        public void SendMessage(String listenerName, IEvent message)
+        public void SendMessage(String listenerName, IEvent message, long expectedTime)
         {
             // Find the listener in the Dic 
             // Send them the message using the RecieveEvent Method on the listener.
             if (listeners.ContainsKey(listenerName))
             {
-                listeners[listenerName].RecieveEvent(message);
+                listeners[listenerName].RecieveEvent(message, expectedTime);
             }
             else
             {
@@ -50,28 +50,46 @@ namespace MUD.Multithreading
         {
             while (true)
             {
+                long currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                 if (!Inbox().IsEmpty())
                 {
-                    bool IsEmpty = false;
-                    while (IsEmpty == false)
+                    PriorityQueueElement nextEvt = Inbox().Peek();
+                    if (nextEvt.time <= currentTime)
                     {
-                        IEvent eventToProcess = Inbox().Dequeue();
-                        ProcessEvent(eventToProcess);
-                        if (Inbox().IsEmpty())
-                        {
-                            IsEmpty = true;
-                        }
+                        ProcessEvent(nextEvt.evt);
+                        Inbox().Dequeue();
                     }
                 }
-                    //There was nothing on the queue. Wait a bit and try again.
-                   Thread.Sleep(waitTime);
-                Update();
+                Thread.Sleep(10);
             }
+            // ****** OLD VERSION*******
+            //while (true)
+            //{
+            //    if (!Inbox().IsEmpty())
+            //    {
+            //        bool IsEmpty = false;
+            //        while (IsEmpty == false)
+            //        {
+            //            PriorityQueueElement eventToProcess = Inbox().Dequeue();
+            //            ProcessEvent(eventToProcess);
+            //            if (Inbox().IsEmpty())
+            //            {
+            //                IsEmpty = true;
+            //            }
+            //        }
+            //    }
+            //    //There was nothing on the queue. Wait a bit and try again.
+            //    Thread.Sleep(waitTime);
+            //    Update();
+            //}
+            //**** OLD VERSION***
         }
 
-        public void RecieveEvent(IEvent evt)
+        public void RecieveEvent(IEvent evt, long expectedTime)
         {
-            Inbox().Enqueue(evt);
+            long currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            long neededTime = expectedTime + currentTime;
+            Inbox().Enqueue(evt, neededTime);
         }
 
         public void Start()

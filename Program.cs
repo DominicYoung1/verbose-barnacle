@@ -24,7 +24,7 @@ namespace MUD
             PlayerController controller = new PlayerController(me, rooms);
             Console.WriteLine("Everything started!");
             GameLoop loop = InitializeActors(controller, npcs);
-            loop.SendMessage("Player", new PrintEvent(Welcome()));
+            loop.SendMessage("Player", new PrintEvent(Welcome()),0);
             loop.Start();
             //Welcome();
             //bool running = true;

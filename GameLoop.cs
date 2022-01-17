@@ -7,19 +7,19 @@ namespace MUD
 {
     class GameLoop: IActor
     {
-        ArrayQueue inbox;
+        ListPriorityQueue inbox;
         PlayerController controller;
         EntityController npcs;
 
         public GameLoop(PlayerController c, EntityController n)
         {
-            inbox = new ArrayQueue();
+            inbox = new ListPriorityQueue();
             Initialize();
             controller = c;
             npcs = n;
         }
 
-        override protected  IThreadedQueue Inbox()
+        override protected  IThreadedPrioQueue Inbox()
         {
             return inbox;
         }
@@ -33,7 +33,7 @@ namespace MUD
                 //need to use the process command method on the "PlayerController"
                 string message = cEvt.GetString();
                 string ret = controller.processCommand(message);
-                SendMessage("Player", new PrintEvent(ret));
+                SendMessage("Player", new PrintEvent(ret), 0);
                 //Console.WriteLine("COMMUUUNICATIONS {0}", cEvt.GetString());
                 //SendMessage("Self", new CommandEvent("Another one!"));
             }
@@ -67,7 +67,7 @@ namespace MUD
                 if (isIn == false)
                 {
                     string message = String.Format("{0} left the room!", occupants[i]);
-                    SendMessage("Player", new PrintEvent(message));
+                    SendMessage("Player", new PrintEvent(message),0);
                 }
             }
             for (int i = 0; i < occupants2.Length(); i++)
@@ -83,7 +83,7 @@ namespace MUD
                 if (isIn == false)
                 {
                     string message = String.Format("{0} entered the room!", occupants2[i]);
-                    SendMessage("Player", new PrintEvent(message));
+                    SendMessage("Player", new PrintEvent(message),0);
                 }
             }
         }
