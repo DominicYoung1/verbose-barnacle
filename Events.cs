@@ -34,4 +34,32 @@ namespace MUD
             return contents;
         }
     }
+
+    public class MoveEvent : IEvent
+    {
+        string nameOfMovingThing;
+        string nameOfSelectedDoor;
+
+        public MoveEvent(string n, string d)
+        {
+            nameOfMovingThing = n;
+            nameOfSelectedDoor = d;
+        }
+
+        public string GetNameOfMovingThing()
+        {
+            return nameOfMovingThing;
+        }
+
+        public string GetNameOfSelectedDoor()
+        {
+            return nameOfSelectedDoor;
+        }
+    }
+
+
+    public class KickOffEvent: IEvent
+    {
+        // Example of "placeholder" utility. Doesnt need to consist of anything to spark a reaction. 
+    }
 }

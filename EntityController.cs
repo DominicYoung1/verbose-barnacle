@@ -52,5 +52,22 @@ namespace MUD
             NpcMove();
             
         }
+
+        public Entity GetNPC(string name)
+        {
+            for (int i = 0; i < npcs.Length(); i++)
+            {
+                if (name == npcs[i].name)
+                {
+                    return npcs[i];
+                }
+            }
+            return null;
+        }
+
+        public ArrayList<Entity> GetAllNPCS()
+        {
+            return npcs;
+        }
     }
 }

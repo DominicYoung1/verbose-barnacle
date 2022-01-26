@@ -24,8 +24,6 @@ namespace MUD.Multithreading
 
         abstract protected void ProcessEvent(IEvent evt);
 
-        abstract protected void Update();
-
         public void SendMessage(String listenerName, IEvent message, long expectedTime)
         {
             // Find the listener in the Dic 

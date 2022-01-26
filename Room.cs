@@ -87,7 +87,6 @@ namespace MUD
 
             for (int i = 0; i < items.Length(); i++)
             {
-                Console.WriteLine("looking for {0}", name);
                 if (name == items[i].Name())
                 {
                    return items.Remove(i);
@@ -154,6 +153,18 @@ namespace MUD
                 }
             }
             return null;
+        }
+
+        public string GetRandomDoorName()
+        {
+            int numberOfDoors = doors.Count;
+            Random rnd = new Random();
+            int num = rnd.Next(0, numberOfDoors);
+            var collectionOfDoors = doors.Keys;
+            string[] doorNames = new string[numberOfDoors];
+            collectionOfDoors.CopyTo(doorNames, 0);
+            string selectedDoorName = doorNames[num];
+            return selectedDoorName;
         }
     }
 }

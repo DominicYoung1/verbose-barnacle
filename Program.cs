@@ -25,6 +25,7 @@ namespace MUD
             Console.WriteLine("Everything started!");
             GameLoop loop = InitializeActors(controller, npcs);
             loop.SendMessage("Player", new PrintEvent(Welcome()),0);
+            loop.SendMessage("Self", new KickOffEvent(), 4000);
             loop.Start();
             //Welcome();
             //bool running = true;

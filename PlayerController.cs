@@ -157,6 +157,7 @@ inspect <item>: Takes a closer look at an item
         }
         string ProcessInspect(string s)
         {
+            // look to add ability to look at things in the players inventory/OR write a new function that does this.
             string inspectName = s.Substring(8);
             string ret = "";
             for (int i = 0; i < player.currentRoom.ListItems().Length(); i++)

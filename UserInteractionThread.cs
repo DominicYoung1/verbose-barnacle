@@ -34,11 +34,6 @@ namespace MUD
             return inbox;
         }
 
-        override protected void Update()
-        {
-
-        }
-
        override protected void ProcessEvent(IEvent evt)
         {
             // Currently Console.Readline is blocking, we need the ability to print to the screen "Process" even without user interation.
