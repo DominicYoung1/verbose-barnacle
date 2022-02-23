@@ -10,6 +10,7 @@ namespace MUD.Multithreading
 
         Dictionary<String, IActor> listeners;
         int waitTime;
+        bool isRunning;
         /**
          * Our Actors are units of computation that are typically built on top of threads.
          * 
@@ -46,7 +47,7 @@ namespace MUD.Multithreading
 
         private void CheckAndProcessQueue()
         {
-            while (true)
+            while (isRunning)
             {
                 long currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                 if (!Inbox().IsEmpty())
@@ -92,6 +93,7 @@ namespace MUD.Multithreading
 
         public void Start()
         {
+            isRunning = true;
             CheckAndProcessQueue();
         }
 
@@ -103,6 +105,11 @@ namespace MUD.Multithreading
         protected void SetWaitTime(int newTime)
         {
             waitTime = newTime;
+        }
+
+        protected void Stop()
+        {
+            isRunning = false;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MUD.Multithreading;
 
 namespace MUD
 {
@@ -21,7 +22,7 @@ namespace MUD
             return player;
         }
 
-        public string processCommand(string s)
+        public EventWithReceiver processCommand(string s)
         {
             // some sort of parser to take input strings and match them to the commands accepted trigger words/phrases
             // this needs to be able to do ALOT of shit.
@@ -30,56 +31,69 @@ namespace MUD
 
             if (s == "help")
             {
-                return ProcessHelp();
+                string m = ProcessHelp();
+                return new EventWithReceiver(new PrintEvent(m), "Player");
                
             }
 
             if (s == "inv")
             {
-                return ProcessInv();
+                string m = ProcessInv();
+                return new EventWithReceiver(new PrintEvent(m), "Player");
                
             }
 
             if (s == "look")
             {
-                return ProcessLook();
+                string m = ProcessLook();
+                return new EventWithReceiver(new PrintEvent(m), "Player");
                 
             }
 
             if (s.StartsWith("move"))
             {
-                return ProcessMove(s);
+                string m = ProcessMove(s);
+                return new EventWithReceiver(new PrintEvent(m), "Player");
                 
             }
 
             if (s.StartsWith("take"))
             {
-                return ProcessTake(s);
+                string m = ProcessTake(s);
+                return new EventWithReceiver(new PrintEvent(m), "Player");
                 
             }
 
             if (s.StartsWith("drop"))
             {
-                return ProcessDrop(s);
+                string m = ProcessDrop(s);
+                return new EventWithReceiver(new PrintEvent(m), "Player");
                 
             }
 
             if (s.StartsWith("attack"))
             {
-                return ProcessAttack(s);
-                
+                //return ProcessAttack(s);
+                string defender = s.Substring(7);
+                return new EventWithReceiver(new CombatEvent("Player", defender), "Self");
             }
             if (s.StartsWith("inspect"))
             {
-                return ProcessInspect(s);
+                string m = ProcessInspect(s);
+                return new EventWithReceiver(new PrintEvent(m), "Player");
               
             }
             if (s.StartsWith("equip"))
             {
-                return ProcessEquip(s);
+                string m = ProcessEquip(s);
+                return new EventWithReceiver(new PrintEvent(m), "Player");
                 
-            } 
-                return String.Format("Error! Please enter a valid command.");
+            }
+            if (s.StartsWith("quit"))
+            {
+                return new EventWithReceiver(new QuitEvent(), "Self");
+            }
+                return new EventWithReceiver(new PrintEvent("Please enter a valid command."), "Player");
         }
 
         string ProcessHelp()
@@ -94,6 +108,7 @@ move <direction>: Moves the player in the desired direction
 take <item>: Takes an item in the room and puts in the player inventory
 drop <item>: Removes an item from the player inventory and places it in the room
 inspect <item>: Takes a closer look at an item
+equip <item>: Equips an item from your inventory
 ";    
         }
 
@@ -145,16 +160,7 @@ inspect <item>: Takes a closer look at an item
             return String.Format("You dropped {0}.", s);
         }
 
-        string ProcessAttack(string s)
-        {
-            // grab the name of the entity being attacked
-            // 
-            // call the InitiateCombat function with player as a and the entity as d
-            string dName = s.Substring(7);
-           Entity defender = player.currentRoom.GetEntity(dName);
-            player.InitiateCombat(defender);
-            return "boi";
-        }
+        
         string ProcessInspect(string s)
         {
             // look to add ability to look at things in the players inventory/OR write a new function that does this.

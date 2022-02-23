@@ -62,4 +62,101 @@ namespace MUD
     {
         // Example of "placeholder" utility. Doesnt need to consist of anything to spark a reaction. 
     }
+
+    public class AttackEvent: IEvent
+    {
+        string attacker;
+        string defender;
+
+        public AttackEvent(string a, string d)
+        {
+            attacker = a;
+            defender = d;
+        }
+
+        public string GetAttacker()
+        {
+            return attacker;
+        }
+
+        public string GetDefender()
+        {
+            return defender;
+        }
+    }
+
+    public class CombatEvent: IEvent
+    {
+        string activeMember;
+        string passiveMember;
+
+        public CombatEvent(string a, string p)
+        {
+            activeMember = a;
+            passiveMember = p;
+        }
+
+        public string GetActiveMember()
+        {
+            return activeMember;
+        }
+
+        public string GetPassiveMemeber()
+        {
+            return passiveMember;
+        }
+    }
+
+    public class DeathEvent: IEvent
+    {
+        string nameOfDead;
+
+        public DeathEvent(string s)
+        {
+            nameOfDead = s;
+        }
+
+        public string GetNameOfDead()
+        {
+            return nameOfDead;
+        }
+    }
+
+    public class QuitEvent: IEvent
+    {
+        public QuitEvent()
+        {
+
+        }
+    }
+
+    public class NpcActionEvent: IEvent
+    {
+        string npcName;
+
+        public NpcActionEvent(string s)
+        {
+            npcName = s;
+        }
+
+        public string GetNpcName()
+        {
+            return npcName;
+        }
+    }
+
+    public class FleeEvent: IEvent
+    {
+        string personRunning;
+
+        public FleeEvent(string s)
+        {
+            personRunning = s;
+        }
+
+        public string GetPersonRunning()
+        {
+            return personRunning;
+        }
+    }
 }

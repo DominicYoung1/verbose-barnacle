@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using MUD.Multithreading;
+using MUD.EntityStates;
 
 namespace MUD
 {
-    class GameLoop: IActor
+   class GameLoop: IActor
     {
         ListPriorityQueue inbox;
         PlayerController controller;
-        EntityController npcs;
+        EntityCollection npcs;
 
-        public GameLoop(PlayerController c, EntityController n)
+        public GameLoop(PlayerController c, EntityCollection n)
         {
             inbox = new ListPriorityQueue();
             Initialize();
@@ -24,44 +25,113 @@ namespace MUD
             return inbox;
         }
 
-        override protected void ProcessEvent(IEvent evt)
+        protected override void ProcessEvent(IEvent evt)
         {
-            if (evt is CommandEvent cEvt)
+            switch (evt)
             {
-                // We need the ability for the GameLoop to keep going even if there are no user events.
-
-                //need to use the process command method on the "PlayerController"
-                string message = cEvt.GetString();
-                string ret = controller.processCommand(message);
-                SendMessage("Player", new PrintEvent(ret), 0);
-                //Console.WriteLine("COMMUUUNICATIONS {0}", cEvt.GetString());
-                //SendMessage("Self", new CommandEvent("Another one!"));
-            }
-            if (evt is KickOffEvent uEvt)
-            {
-                // Need this to facilitate the actions of the world
-                // and then at the end create another update event to be processed
-
-                //SendMessage("Player", new PrintEvent("Update Occured!"), 0);
-                for (int i = 0; i < npcs.GetAllNPCS().Length(); i++)
-                {
-                    Entity movingEntity = npcs.GetAllNPCS()[i];
-                    string door = movingEntity.currentRoom.GetRandomDoorName();
-                    SendMessage("Self", new MoveEvent(npcs.GetAllNPCS()[i].name, door), 4000);
-                }
-            }
-            if (evt is MoveEvent mEvt)
-            {
-                // Need this to take care of the movment of all npcs
-                // If the movment happens in view of the player via their room, it needs send a printevent for the player to read.
-
-                string entityName = mEvt.GetNameOfMovingThing();
-                string doorName = mEvt.GetNameOfSelectedDoor();
-                Room occupiedRoom = MoveEntity(entityName, doorName);
-                string selectedDoorName = occupiedRoom.GetRandomDoorName();
-                Random rnd = new Random();
-                int num = rnd.Next(4000, 8000);
-                SendMessage("Self", new MoveEvent(entityName, selectedDoorName), num);
+                case CommandEvent cEvt:
+                    {
+                        string message = cEvt.GetString();
+                        EventWithReceiver ret = controller.processCommand(message);
+                        SendMessage(ret.actorName, ret.message, 0);
+                        break;
+                    }
+                case KickOffEvent:
+                    {
+                        for (int i = 0; i < npcs.GetAllNPCS().Length(); i++)
+                        {
+                            Entity movingEntity = npcs.GetAllNPCS()[i];
+                            string door = movingEntity.currentRoom.GetRandomDoorName();
+                            SendMessage("Self", new NpcActionEvent(npcs.GetAllNPCS()[i].name), 4000);
+                        }
+                        break;
+                    }
+                case MoveEvent mEvt:
+                    {
+                        // check curretn stautgyers
+                        string entityName = mEvt.GetNameOfMovingThing();
+                        string doorName = mEvt.GetNameOfSelectedDoor();
+                        MoveEntity(entityName, doorName);
+                        // call method GetNextEvent
+                        break;
+                    }
+                case AttackEvent aEvt:
+                    {
+                        string attacker = aEvt.GetAttacker();
+                        string defender = aEvt.GetDefender();
+                        Entity attackerEntity = attacker == "Player" ? controller.PlayerInfo() : npcs.GetNPC(attacker);
+                        Entity defenderEntity = defender == "Player" ? controller.PlayerInfo() : npcs.GetNPC(defender);
+                        double swing = attackerEntity.ImpartDamage();
+                        defenderEntity.TakeDamage(swing);
+                        if (!defenderEntity.Alive())
+                        {
+                            SendMessage("Self", new DeathEvent(defender), 0);
+                            break;
+                        }
+                        if (attacker == "Player")
+                        {
+                            SendMessage("Player", new PrintEvent(String.Format("You did {0} damage!", swing)), 0);
+                        }
+                        if (defender == "Player")
+                        {
+                            SendMessage("Player", new PrintEvent(String.Format("You recieved {0} damage, Remaining HP {1}", swing, defenderEntity.health)), 0);
+                        }
+                        SendMessage("Self", new CombatEvent(defender, attacker), 3000);
+                        break;
+                    }
+                case CombatEvent cEvt:
+                    {
+                        if (cEvt.GetActiveMember() == "Player")
+                        {
+                            SendMessage("Self",
+                                new AttackEvent("Player", cEvt.GetPassiveMemeber()),
+                                0);
+                            break;
+                        }
+                        EntityBehaviorStateMachine activeMembersMachine = npcs.GetStateMachine(cEvt.GetActiveMember());
+                        Entity need = npcs.GetNPC(cEvt.GetActiveMember());
+                        EventWithReceiver nextAction = activeMembersMachine.ProcessEvent(evt, need);
+                        if (nextAction != null)
+                        {
+                            SendMessage(nextAction.actorName, nextAction.message, 0);
+                        }
+                        break;
+                    }
+                case NpcActionEvent nEvt:
+                    {
+                        EntityBehaviorStateMachine stateMachine = npcs.GetStateMachine(nEvt.GetNpcName());
+                        Entity need = npcs.GetNPC(nEvt.GetNpcName());
+                        EventWithReceiver nextAction = stateMachine.ProcessEvent(evt, need);
+                        if (nextAction != null)
+                        {
+                            SendMessage(nextAction.actorName, nextAction.message, 0);
+                        }
+                        SendMessage("Self", new NpcActionEvent(nEvt.GetNpcName()), 4000);
+                        break;
+                    }
+                case DeathEvent dEvt:
+                    {
+                        if (dEvt.GetNameOfDead() == "Player")
+                        {
+                            SendMessage("Player", new PrintEvent(String.Format("You died horribly!")), 0);
+                            SendMessage("Self", new QuitEvent(), 0);
+                        }
+                        break;
+                    }
+                case QuitEvent qEvt:
+                    {
+                        Stop();
+                        break;
+                    }
+                case FleeEvent fEvt:
+                    {
+                        string nameOfPersonMoving = fEvt.GetPersonRunning();
+                        Entity personMoving = npcs.GetNPC(nameOfPersonMoving);
+                        string selectedDoorName = personMoving.currentRoom.GetRandomDoorName();
+                        Console.WriteLine("{0} has fled!", nameOfPersonMoving);
+                        SendMessage("Self", new MoveEvent(nameOfPersonMoving, selectedDoorName), 0);
+                        break;
+                    }
             }
         }
 

@@ -15,10 +15,10 @@ namespace MUD
             dic = world.GetItems();
             ArrayList<Room> rooms = world.GetRooms(dic);
             Entity me = new Entity(rooms[1], "Harold");
-            EntityController npcs = new EntityController();
-            Entity jim = EntityFactory.CreateEntity(EntityType.Jim, "Jim", rooms[0]);
+            EntityCollection npcs = new EntityCollection();
+            Entity Jim = EntityFactory.CreateEntity(EntityType.Jim, "Jim", rooms[0]);
             Entity frnak = EntityFactory.CreateEntity(EntityType.Frank, "Frank", rooms[2]);
-            npcs.RegisterEntity(jim);
+            npcs.RegisterEntity(Jim);
             npcs.RegisterEntity(frnak);
             //npcs.SpawnEntity(rooms[0], "Jim");
             PlayerController controller = new PlayerController(me, rooms);
@@ -58,7 +58,7 @@ This place was once a thriving estate that used to be the seat of power for the 
 But that was a long time ago....for now just expolore!";
         }
 
-        public static GameLoop InitializeActors(PlayerController c, EntityController n)
+        public static GameLoop InitializeActors(PlayerController c, EntityCollection n)
         {
             // 1. We need to make our GameLoop instance
             // 2. We need to make our UserInteractionThread instance

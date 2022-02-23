@@ -1,8 +1,8 @@
 ﻿**TODO**
 	1. Add ability to look at item more closley in the players inventory.
-	2. Add the equip command to the printed result of "help"
+	2. On the equip function, add UNEQUIPPING former items if they were equipped.
 	3. Finish the process of equiping an item altering combat stats.
 	4. Build function UNEQUIP
-	5. Fix/Add the ability to quit lol.
-
-
+	**** MORE PRESSING ****
+	1.Make sure that you cannot swing at enemies that are not in your sight.
+	

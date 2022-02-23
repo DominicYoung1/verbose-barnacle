@@ -11,7 +11,8 @@ namespace MUD
 
         public CombatStats()
         {
-            strength = 1.0;
+            //temp change
+            strength = 10.0;
             defence = 1.0;
         }
 

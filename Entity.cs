@@ -79,12 +79,6 @@ namespace MUD
             inventory.Push(item);
         }
 
-        public void InitiateCombat(Entity d)
-        {
-           CombatController combat = new CombatController(this, d);
-           combat.ProcessCombat();
-        }
-
         public void TakeDamage(double dmg)
         {
             health -= combatStats.ComputeDamageTaken(dmg);
