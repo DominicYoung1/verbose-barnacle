@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MUD
 {
@@ -38,46 +37,46 @@ namespace MUD
         // TODO** consider a function that combines arraylists into a large readable function/write two more list functions and call them all.
         //public ArrayList<Weapon> ListWeapons()
         //{
-          //  return weapons;
+        //  return weapons;
         //}
 
         //public ArryaList<Armor> ListArmor()
         //{
-            //return armor;
+        //return armor;
         //}
 
         //public void AddWeapon(Weapon i)
         //{
-            //weapons.Push(i);
+        //weapons.Push(i);
         //}
 
         //public Weapon RemoveWeapon(string name)
         //{
-            //for (int = 0; int < weapons.Length(); i++)
-            //{
-                //if (name = weapons[i].name)
-                //{
-                    //return weapons.Remove(i);
-                //}
-            //}
-            //return null;
+        //for (int = 0; int < weapons.Length(); i++)
+        //{
+        //if (name = weapons[i].name)
+        //{
+        //return weapons.Remove(i);
+        //}
+        //}
+        //return null;
         //}
 
         //public void AddArmor(Armor i)
         //{
-            //return Armor;
+        //return Armor;
         //}
 
         //public Armor RemoveArmor(string name)
         //{
-            //for (int i = 0; i < armor.Length(); i++)
-            //{
-                //if (name == armor[i].name)
-                //{
-                   //return armor.Remove(i);
-                //}
-            //}
-            //return null;
+        //for (int i = 0; i < armor.Length(); i++)
+        //{
+        //if (name == armor[i].name)
+        //{
+        //return armor.Remove(i);
+        //}
+        //}
+        //return null;
         //}
         //}
         public Item RemoveItem(string name)
@@ -89,7 +88,7 @@ namespace MUD
             {
                 if (name == items[i].Name())
                 {
-                   return items.Remove(i);
+                    return items.Remove(i);
                 }
             }
             return null;
@@ -100,7 +99,7 @@ namespace MUD
             string s = String.Format("{0} \n {1}", name, description);
             //Console.WriteLine(name);
             //Console.WriteLine(description);
-            foreach(string direction in doors.Keys)
+            foreach (string direction in doors.Keys)
             {
                 s = s + String.Format("\n{0} -> {1}", direction, doors[direction].name);
             }
@@ -165,6 +164,15 @@ namespace MUD
             collectionOfDoors.CopyTo(doorNames, 0);
             string selectedDoorName = doorNames[num];
             return selectedDoorName;
+        }
+
+        public bool ContainsEntity(string name)
+        {
+            if (GetEntity(name) != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MUD.Multithreading;
+﻿using MUD.Multithreading;
 
 namespace MUD.EntityStates
 {
@@ -21,8 +16,8 @@ namespace MUD.EntityStates
             // get list of possible actions and apply the math table logic stuff for determination.
             if (evt is NpcActionEvent)
             {
-               string selectedDoorName = npc.currentRoom.GetRandomDoorName();
-               return new EventWithReceiver(new MoveEvent(npc.name, selectedDoorName), "Self");
+                string selectedDoorName = npc.currentRoom.GetRandomDoorName();
+                return new EventWithReceiver(new MoveEvent(npc.name, selectedDoorName), "Self");
             }
             return null;
         }

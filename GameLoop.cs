@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MUD.EntityStates;
 using MUD.Multithreading;
-using MUD.EntityStates;
+using System;
 
 namespace MUD
 {
-   class GameLoop: IActor
+    class GameLoop : IActor
     {
         ListPriorityQueue inbox;
         PlayerController controller;
@@ -20,7 +18,7 @@ namespace MUD
             npcs = n;
         }
 
-        override protected  IThreadedPrioQueue Inbox()
+        override protected IThreadedPrioQueue Inbox()
         {
             return inbox;
         }
@@ -59,8 +57,8 @@ namespace MUD
                     {
                         string attacker = aEvt.GetAttacker();
                         string defender = aEvt.GetDefender();
-                        Entity attackerEntity = attacker == "Player" ? controller.PlayerInfo() : npcs.GetNPC(attacker);
-                        Entity defenderEntity = defender == "Player" ? controller.PlayerInfo() : npcs.GetNPC(defender);
+                        Entity attackerEntity = GetPlayerNpc(attacker);
+                        Entity defenderEntity = GetPlayerNpc(defender);
                         double swing = attackerEntity.ImpartDamage();
                         defenderEntity.TakeDamage(swing);
                         if (!defenderEntity.Alive())
@@ -81,31 +79,37 @@ namespace MUD
                     }
                 case CombatEvent cEvt:
                     {
-                        if (cEvt.GetActiveMember() == "Player")
+                        if (GetPlayerNpc(cEvt.GetActiveMember()).currentRoom.ContainsEntity(cEvt.GetPassiveMemeber()) == true)
                         {
-                            SendMessage("Self",
-                                new AttackEvent("Player", cEvt.GetPassiveMemeber()),
-                                0);
-                            break;
+
+                            if (cEvt.GetActiveMember() == "Player")
+                            {
+                                SendMessage("Self",
+                                    new AttackEvent("Player", cEvt.GetPassiveMemeber()),
+                                    0);
+                                break;
+                            }
+                            EntityBehaviorStateMachine activeMembersMachine = npcs.GetStateMachine(cEvt.GetActiveMember());
+                            Entity need = npcs.GetNPC(cEvt.GetActiveMember());
+                            EventWithReceiver nextAction = activeMembersMachine.ProcessEvent(evt, need);
+                            if (nextAction != null)
+                            {
+                                SendMessage(nextAction.actorName, nextAction.message, 0);
+                            }
                         }
-                        EntityBehaviorStateMachine activeMembersMachine = npcs.GetStateMachine(cEvt.GetActiveMember());
-                        Entity need = npcs.GetNPC(cEvt.GetActiveMember());
-                        EventWithReceiver nextAction = activeMembersMachine.ProcessEvent(evt, need);
-                        if (nextAction != null)
-                        {
-                            SendMessage(nextAction.actorName, nextAction.message, 0);
-                        }
+                        else SendMessage("Player", new PrintEvent("You look around and your target isn't in the room!"), 0);
+                        break;
+
+                    }
+                case EndCombatEvent eEvt:
+                    {
+                        GenerateNextAction(eEvt, eEvt.GetActiveMember());
+                        GenerateNextAction(eEvt, eEvt.GetPassiveMemeber());
                         break;
                     }
                 case NpcActionEvent nEvt:
                     {
-                        EntityBehaviorStateMachine stateMachine = npcs.GetStateMachine(nEvt.GetNpcName());
-                        Entity need = npcs.GetNPC(nEvt.GetNpcName());
-                        EventWithReceiver nextAction = stateMachine.ProcessEvent(evt, need);
-                        if (nextAction != null)
-                        {
-                            SendMessage(nextAction.actorName, nextAction.message, 0);
-                        }
+                        GenerateNextAction(nEvt, nEvt.GetNpcName());
                         SendMessage("Self", new NpcActionEvent(nEvt.GetNpcName()), 4000);
                         break;
                     }
@@ -128,7 +132,9 @@ namespace MUD
                         string nameOfPersonMoving = fEvt.GetPersonRunning();
                         Entity personMoving = npcs.GetNPC(nameOfPersonMoving);
                         string selectedDoorName = personMoving.currentRoom.GetRandomDoorName();
-                        Console.WriteLine("{0} has fled!", nameOfPersonMoving);
+                        string nameOfPersonRanFrom = fEvt.GetPersonRanFrom();
+                        SendMessage("Player", new PrintEvent(String.Format("{0} has fled!", nameOfPersonMoving)), 0);
+                        SendMessage("Self", new EndCombatEvent(nameOfPersonMoving, nameOfPersonRanFrom), 0);
                         SendMessage("Self", new MoveEvent(nameOfPersonMoving, selectedDoorName), 0);
                         break;
                     }
@@ -142,7 +148,8 @@ namespace MUD
             Entity selected = npcs.GetNPC(entityName);
             Room playerRoom = controller.PlayerInfo().currentRoom;
             Room destination = selected.currentRoom.doors[doorName];
-            if (selected.currentRoom.name == playerRoom.name){
+            if (selected.currentRoom.name == playerRoom.name)
+            {
                 isPlayerInBefore = true;
             }
             if (destination.name == playerRoom.name)
@@ -162,53 +169,29 @@ namespace MUD
             }
             return selected.currentRoom;
         }
-        //protected  void Update()
-        //{
-        //    //This function will be responsible for "anything that does not depend on the user"'s actions in time.
-        //    ArrayList<string> occupants = new ArrayList<string>(10);
-        //    ArrayList<Entity> entities = controller.PlayerInfo().currentRoom.GetOccupants();
-        //    for (int i = 0; i < entities.Length(); i++)
-        //    {
-        //        occupants.Push(entities[i].name);
-        //    }
-        //    npcs.UpdateEntities(); // can be used to make a string that can be shown to the player if something moves in their view.
-        //    ArrayList<string> occupants2 = new ArrayList<string>(10);
-        //    for (int i = 0; i < entities.Length(); i++)
-        //    {
-        //        occupants2.Push(entities[i].name);
-        //    }
-        //    for (int i = 0; i < occupants.Length(); i++)
-        //    {
-        //        bool isIn = false; 
-        //        for (int j = 0; j < occupants2.Length(); j++)
-        //        {
-        //            if (occupants[i] == occupants2[j])
-        //            {
-        //                isIn = true;
-        //            }
-        //        }
-        //        if (isIn == false)
-        //        {
-        //            string message = String.Format("{0} left the room!", occupants[i]);
-        //            SendMessage("Player", new PrintEvent(message),0);
-        //        }
-        //    }
-        //    for (int i = 0; i < occupants2.Length(); i++)
-        //    {
-        //        bool isIn = false;
-        //        for (int j = 0; j < occupants.Length(); j++)
-        //        {
-        //            if (occupants2[i] == occupants[j])
-        //            {
-        //                isIn = true;
-        //            }
-        //        }
-        //        if (isIn == false)
-        //        {
-        //            string message = String.Format("{0} entered the room!", occupants2[i]);
-        //            SendMessage("Player", new PrintEvent(message),0);
-        //        }
-        //    }
-        //}
+        
+        public Entity GetPlayerNpc(string name)
+        {
+            if (name == "Player")
+            {
+                return controller.PlayerInfo();
+            }
+            else return npcs.GetNPC(name);
+        }
+
+        public void GenerateNextAction(IEvent evt, string name)
+        {
+            if (name == "Player")
+            {
+                return;
+            }
+            EntityBehaviorStateMachine stateMachine = npcs.GetStateMachine(name);
+            Entity need = npcs.GetNPC(name);
+            EventWithReceiver nextAction = stateMachine.ProcessEvent(evt, need);
+            if (nextAction != null)
+            {
+                SendMessage(nextAction.actorName, nextAction.message, 0);
+            }
+        }
     }
 }

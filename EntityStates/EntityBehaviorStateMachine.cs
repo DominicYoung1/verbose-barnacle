@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MUD.Multithreading;
+﻿using MUD.Multithreading;
 
 namespace MUD.EntityStates
 {
-   public class EntityBehaviorStateMachine
+    public class EntityBehaviorStateMachine
     {
         IEntityState currentState;
 

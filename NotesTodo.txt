@@ -4,5 +4,10 @@
 	3. Finish the process of equiping an item altering combat stats.
 	4. Build function UNEQUIP
 	**** MORE PRESSING ****
-	1.Make sure that you cannot swing at enemies that are not in your sight.
-	
+	1. Spawn shit, make sure the right amount of mobs are always present in world (with delay probs).
+		a) A cycle of respawing that is automated when thing die.
+		b) Mobs could have a set path of travel.
+			) Subset of the map that the entity can travel too.
+			) Mob that hunts the player.
+	2. Fast travel mechanic
+		a) If traveling to a room with a hostile npc start combat.

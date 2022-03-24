@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 
 namespace MUD
 {
-   public class WorldLoader
+    public class WorldLoader
     {
         string path;
 
@@ -25,8 +24,7 @@ namespace MUD
             {
                 lines.Push(file.ReadLine());
             }
-            int itemIndex = 0;
-            for (int i = 0; i < lines.Length(); i+= 3)
+            for (int i = 0; i < lines.Length(); i += 3)
             {
                 string nameAndDesc = lines[i];
                 string[] nameDescPair = nameAndDesc.Split(':');
@@ -146,7 +144,8 @@ namespace MUD
                     if (destinationRoom != null)
                     {
                         myRoom.doors.Add(key, destinationRoom);
-                    } else
+                    }
+                    else
                     {
                         Console.WriteLine("Error! Could not find the room {0} through the door {1}", value, key);
                     }
@@ -154,7 +153,7 @@ namespace MUD
 
                 counter++;
             }
-            
+
 
             return rooms;
         }

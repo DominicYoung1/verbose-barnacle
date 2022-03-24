@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MUD.Multithreading;
+﻿using MUD.Multithreading;
 
 namespace MUD.EntityStates
 {
@@ -20,7 +15,7 @@ namespace MUD.EntityStates
             {
                 IEvent eventToReturn = (this as IRandomSelection).PickAOrB(
                     new AttackEvent(cEvt.GetActiveMember(), cEvt.GetPassiveMemeber()),
-                    new FleeEvent(cEvt.GetActiveMember()),
+                    new FleeEvent(cEvt.GetActiveMember(), cEvt.GetPassiveMemeber()),
                     npc.health < 25 ? 0.7 : 1.0);
                 return new EventWithReceiver(
                    eventToReturn,
@@ -31,9 +26,9 @@ namespace MUD.EntityStates
 
         public IEntityState PerformTransition(IEvent evt)
         {
-            if (evt is MoveEvent)
+            if (evt is EndCombatEvent)
             {
-                return null;
+                return new WanderingState();
             }
             return null;
         }

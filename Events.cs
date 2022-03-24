@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MUD.Multithreading;
+﻿using MUD.Multithreading;
 
 namespace MUD
 {
@@ -20,7 +17,7 @@ namespace MUD
         }
     }
 
-    public class CommandEvent: IEvent
+    public class CommandEvent : IEvent
     {
         string contents;
 
@@ -58,12 +55,12 @@ namespace MUD
     }
 
 
-    public class KickOffEvent: IEvent
+    public class KickOffEvent : IEvent
     {
         // Example of "placeholder" utility. Doesnt need to consist of anything to spark a reaction. 
     }
 
-    public class AttackEvent: IEvent
+    public class AttackEvent : IEvent
     {
         string attacker;
         string defender;
@@ -85,7 +82,7 @@ namespace MUD
         }
     }
 
-    public class CombatEvent: IEvent
+    public class CombatEvent : IEvent
     {
         string activeMember;
         string passiveMember;
@@ -107,7 +104,7 @@ namespace MUD
         }
     }
 
-    public class DeathEvent: IEvent
+    public class DeathEvent : IEvent
     {
         string nameOfDead;
 
@@ -122,7 +119,7 @@ namespace MUD
         }
     }
 
-    public class QuitEvent: IEvent
+    public class QuitEvent : IEvent
     {
         public QuitEvent()
         {
@@ -130,7 +127,7 @@ namespace MUD
         }
     }
 
-    public class NpcActionEvent: IEvent
+    public class NpcActionEvent : IEvent
     {
         string npcName;
 
@@ -145,18 +142,47 @@ namespace MUD
         }
     }
 
-    public class FleeEvent: IEvent
+    public class FleeEvent : IEvent
     {
         string personRunning;
+        string personRanFrom;
 
-        public FleeEvent(string s)
+        public FleeEvent(string s, string p)
         {
             personRunning = s;
+            personRanFrom = p;
         }
 
         public string GetPersonRunning()
         {
             return personRunning;
+        }
+
+        public string GetPersonRanFrom()
+        {
+            return personRanFrom;
+        }
+    }
+
+    public class EndCombatEvent : IEvent
+    {
+        string activeMember;
+        string passiveMember;
+
+        public EndCombatEvent(string a, string p)
+        {
+            activeMember = a;
+            passiveMember = p;
+        }
+
+        public string GetActiveMember()
+        {
+            return activeMember;
+        }
+
+        public string GetPassiveMemeber()
+        {
+            return passiveMember;
         }
     }
 }

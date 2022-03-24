@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MUD
+﻿namespace MUD
 {
     public class Entity
     {
@@ -16,7 +12,7 @@ namespace MUD
         public Weapon equipedWeapon;
         public Armor equipedArmor;
         //string kind static/moblie/player ASK JORDAN ABOUT IT LATER
-        
+
 
         public Entity(Room startingRoom, string id)
         {
@@ -33,12 +29,12 @@ namespace MUD
 
         //public ArrayList<Weapon> ListWeapons()
         //{
-            //return weapons;
+        //return weapons;
         //}
 
         //public ArrayList<Armor> ListArmor()
         //{
-            //return armor;
+        //return armor;
         //}
 
         public ArrayList<Item> ListInventory()
@@ -110,7 +106,7 @@ namespace MUD
         // prompt the user for input on what they sould do after each round of combat.
         public void CombatAction()
         {
-            
+
         }
 
         //public void Dead()
@@ -122,4 +118,4 @@ namespace MUD
         //}
     }
 }
-    
+

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 
 namespace MUD
@@ -14,7 +13,7 @@ namespace MUD
             Dictionary<string, Item> dic = new Dictionary<string, Item>();
             dic = world.GetItems();
             ArrayList<Room> rooms = world.GetRooms(dic);
-            Entity me = new Entity(rooms[1], "Harold");
+            Entity me = new Entity(rooms[1], "Player");
             EntityCollection npcs = new EntityCollection();
             Entity Jim = EntityFactory.CreateEntity(EntityType.Jim, "Jim", rooms[0]);
             Entity frnak = EntityFactory.CreateEntity(EntityType.Frank, "Frank", rooms[2]);
@@ -24,7 +23,7 @@ namespace MUD
             PlayerController controller = new PlayerController(me, rooms);
             Console.WriteLine("Everything started!");
             GameLoop loop = InitializeActors(controller, npcs);
-            loop.SendMessage("Player", new PrintEvent(Welcome()),0);
+            loop.SendMessage("Player", new PrintEvent(Welcome()), 0);
             loop.SendMessage("Self", new KickOffEvent(), 4000);
             loop.Start();
             //Welcome();
@@ -50,7 +49,7 @@ namespace MUD
             return userInput;
         }
 
-        public static string  Welcome()
+        public static string Welcome()
         {
             return @"
 Welcome to Bambleburg.
@@ -66,10 +65,10 @@ But that was a long time ago....for now just expolore!";
 
             GameLoop gameLoop = new GameLoop(c, n);
             UserInteractionThread userInterationThread = new UserInteractionThread();
-            gameLoop.RegisterListener("Player",userInterationThread);
+            gameLoop.RegisterListener("Player", userInterationThread);
             gameLoop.RegisterListener("Self", gameLoop);
             userInterationThread.RegisterListener("Self", userInterationThread);
-            userInterationThread.RegisterListener("GameLoop",gameLoop);
+            userInterationThread.RegisterListener("GameLoop", gameLoop);
 
             Thread uiThread = new Thread(new ThreadStart(userInterationThread.Start));
             uiThread.Start();

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MUD.Multithreading;
+﻿using MUD.Multithreading;
+using System;
 
 namespace MUD
 {
@@ -27,48 +25,48 @@ namespace MUD
             // some sort of parser to take input strings and match them to the commands accepted trigger words/phrases
             // this needs to be able to do ALOT of shit.
 
-            
+
 
             if (s == "help")
             {
                 string m = ProcessHelp();
                 return new EventWithReceiver(new PrintEvent(m), "Player");
-               
+
             }
 
             if (s == "inv")
             {
                 string m = ProcessInv();
                 return new EventWithReceiver(new PrintEvent(m), "Player");
-               
+
             }
 
             if (s == "look")
             {
                 string m = ProcessLook();
                 return new EventWithReceiver(new PrintEvent(m), "Player");
-                
+
             }
 
             if (s.StartsWith("move"))
             {
                 string m = ProcessMove(s);
                 return new EventWithReceiver(new PrintEvent(m), "Player");
-                
+
             }
 
             if (s.StartsWith("take"))
             {
                 string m = ProcessTake(s);
                 return new EventWithReceiver(new PrintEvent(m), "Player");
-                
+
             }
 
             if (s.StartsWith("drop"))
             {
                 string m = ProcessDrop(s);
                 return new EventWithReceiver(new PrintEvent(m), "Player");
-                
+
             }
 
             if (s.StartsWith("attack"))
@@ -81,19 +79,19 @@ namespace MUD
             {
                 string m = ProcessInspect(s);
                 return new EventWithReceiver(new PrintEvent(m), "Player");
-              
+
             }
             if (s.StartsWith("equip"))
             {
                 string m = ProcessEquip(s);
                 return new EventWithReceiver(new PrintEvent(m), "Player");
-                
+
             }
             if (s.StartsWith("quit"))
             {
                 return new EventWithReceiver(new QuitEvent(), "Self");
             }
-                return new EventWithReceiver(new PrintEvent("Please enter a valid command."), "Player");
+            return new EventWithReceiver(new PrintEvent("Please enter a valid command."), "Player");
         }
 
         string ProcessHelp()
@@ -109,13 +107,13 @@ take <item>: Takes an item in the room and puts in the player inventory
 drop <item>: Removes an item from the player inventory and places it in the room
 inspect <item>: Takes a closer look at an item
 equip <item>: Equips an item from your inventory
-";    
+";
         }
 
         string ProcessInv()
         {
             string s = "You look in bag and you see:";
-            ArrayList<Item>  inv = player.ListInventory();
+            ArrayList<Item> inv = player.ListInventory();
             for (int i = 0; i < inv.Length(); i++)
             {
                 //Console.WriteLine("{0}", inv[i].Name());
@@ -130,7 +128,7 @@ equip <item>: Equips an item from your inventory
             string s = player.currentRoom.Describe();
             return s;
         }
-        
+
         string ProcessMove(string s)
         {
             string s2 = s.Substring(5);
@@ -142,7 +140,7 @@ equip <item>: Equips an item from your inventory
         {
             // needs to look through the list of items in a room for the input string
             // then needs to add the item to the players inventory
-           Item queryItem = player.currentRoom.RemoveItem(s.Substring(5));
+            Item queryItem = player.currentRoom.RemoveItem(s.Substring(5));
             if (queryItem != null)
             {
                 player.PickupItem(queryItem);
@@ -160,7 +158,7 @@ equip <item>: Equips an item from your inventory
             return String.Format("You dropped {0}.", s);
         }
 
-        
+
         string ProcessInspect(string s)
         {
             // look to add ability to look at things in the players inventory/OR write a new function that does this.

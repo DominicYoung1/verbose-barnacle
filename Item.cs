@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MUD
 {
@@ -25,7 +23,7 @@ namespace MUD
 
     public interface IEquipable
     {
-      
+
     }
     public class Weapon : Item, IEquipable
     {
@@ -52,7 +50,7 @@ namespace MUD
 
         public string Inspect()
         {
-            return String.Format("{0}\n{1}\nDoes {2} damage",name, description, damageValue.ToString());
+            return String.Format("{0}\n{1}\nDoes {2} damage", name, description, damageValue.ToString());
             //Console.WriteLine("{0}", name);
             //Console.WriteLine("{0}", description);
             //Console.WriteLine("Does {0} damage", damageValue);
@@ -82,7 +80,7 @@ namespace MUD
         //    return description;
         //}
 
-        public string  Inspect()
+        public string Inspect()
         {
             return String.Format("{0}\n{1}\nProvides {2} armor", name, description, armorValue.ToString());
             //Console.WriteLine("{0}", name);

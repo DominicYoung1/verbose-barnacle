@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MUD.Multithreading
+﻿namespace MUD.Multithreading
 {
     public class ArrayQueue : IThreadedQueue
     {
@@ -22,7 +18,7 @@ namespace MUD.Multithreading
         {
             lock (data)
             {
-            data.Push(evt);
+                data.Push(evt);
             }
         }
 

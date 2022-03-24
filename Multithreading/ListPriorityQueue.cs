@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 
 namespace MUD.Multithreading
@@ -29,7 +27,8 @@ namespace MUD.Multithreading
                 if (IsEmpty())
                 {
                     data.AddFirst(new PriorityQueueElement(evt, time));
-                } else if (data.Last.Value.time <= time)
+                }
+                else if (data.Last.Value.time <= time)
                 {
                     data.AddLast(new PriorityQueueElement(evt, time));
                 }
